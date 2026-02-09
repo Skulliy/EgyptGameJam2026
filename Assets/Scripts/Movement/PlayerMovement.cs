@@ -5,37 +5,64 @@ public class PlayerMovement : MonoBehaviour
 {
 	[Header("Movement Settings")]
 	[Tooltip("How fast the player moves in units per second.")]
-	public float moveSpeed = 6.0f;
+	public float moveSpeed = 4f;
 
-	// Reference to the CharacterController component
+	[Header("Gravity Settings")]
+	[Tooltip("The force pulling the player down (Standard Earth gravity is -9.81).")]
+	public float gravity = -9.81f;
+
+	[Tooltip("A small constant force to keep the player stuck to the ground.")]
+	public float groundedGravity = -2.0f;
+
+	// Reference to the CharacterController
 	private CharacterController controller;
+
+	// This stores our vertical speed (falling/jumping)
+	private Vector3 velocity;
 
 	void Start()
 	{
-		// Automatically find the CharacterController attached to this object
 		controller = GetComponent<CharacterController>();
 	}
 
 	void Update()
 	{
-		// 1. Get Input (Returns -1 to 1 based on WASD or Arrow Keys)
-		float x = Input.GetAxis("Horizontal"); // A / D
-		float z = Input.GetAxis("Vertical");   // W / S
+		// ---------------------------------------------------------
+		// 1. HORIZONTAL MOVEMENT (X and Z)
+		// ---------------------------------------------------------
 
-		// 2. Calculate the direction relative to where the player is facing
-		// transform.right is the local Red axis (Left/Right)
-		// transform.forward is the local Blue axis (Forward/Back)
+		// Get Input (WASD / Arrows)
+		float x = Input.GetAxis("Horizontal");
+		float z = Input.GetAxis("Vertical");
+
+		// Calculate direction relative to where we are facing
 		Vector3 move = transform.right * x + transform.forward * z;
 
-		// 3. Normalize the vector
-		// Without this, moving diagonally (W + D) would make you move faster (~1.41x speed)
-		// We check magnitude > 1 so we don't force slow analog stick movements to be full speed
-		if (move.magnitude > 1f)
+		// Normalize to prevent faster diagonal movement
+		if (move.magnitude > 1f) move.Normalize();
+
+		// Move the controller horizontally
+		controller.Move(move * moveSpeed * Time.deltaTime);
+
+
+		// ---------------------------------------------------------
+		// 2. GRAVITY LOGIC (Y Axis)
+		// ---------------------------------------------------------
+
+		// Check if the controller is touching the ground
+		if (controller.isGrounded && velocity.y < 0)
 		{
-			move.Normalize();
+			// We don't set this to 0 because the isGrounded check can be flickery.
+			// -2 ensures we stay "snapped" firmly to the floor.
+			velocity.y = groundedGravity;
 		}
 
-		// 4. Move the Controller
-		controller.Move(move * moveSpeed * Time.deltaTime);
+		// Apply Gravity to the velocity (v = a * t)
+		velocity.y += gravity * Time.deltaTime;
+
+		// Apply the vertical velocity to the controller (d = v * t)
+		// Note: We multiply by deltaTime AGAIN because physics formulas are (1/2 * g * t^2)
+		controller.Move(velocity * Time.deltaTime);
 	}
+
 }
