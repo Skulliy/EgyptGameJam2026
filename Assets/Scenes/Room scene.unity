@@ -279,7 +279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rayOrigin: {fileID: 550288069}
-  maxDistance: 3
+  maxDistance: 4
   currentSelectionMode: 0
   currentlyHitObject: {fileID: 0}
   OnObjectEnter:
@@ -685,7 +685,6 @@ MonoBehaviour:
   OnObjectSelected:
     m_PersistentCalls:
       m_Calls: []
-  currentTarget: {fileID: 0}
 --- !u!1 &782770653
 GameObject:
   m_ObjectHideFlags: 0

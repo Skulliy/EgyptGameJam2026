@@ -13,7 +13,7 @@ public class ObjectSelectionTrigger : MonoBehaviour
 
 	// Internal state variables
 	private bool isListening = false;
-	public  PickableObject currentTarget = null;
+	private  PickableObject currentTarget = null;
 
 	void Update()
 	{
@@ -23,9 +23,11 @@ public class ObjectSelectionTrigger : MonoBehaviour
 			// Check for the button press (Legacy Input)
 			if (Input.GetKeyDown(interactionKey))
 			{
+
 				// Fire the event!
 				// This broadcasts the specific object we just clicked on.
 				OnObjectSelected.Invoke(currentTarget);
+				currentTarget.GetComponent<Renderer>().material.color = Color.green;
 			}
 		}
 	}
