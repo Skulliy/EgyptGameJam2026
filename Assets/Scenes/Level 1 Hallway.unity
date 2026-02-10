@@ -505,7 +505,7 @@ MonoBehaviour:
     - name: Story
       clip: {fileID: 0}
     - name: SFX
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 1cd033fd405f9ef40809ebebd7196764, type: 3}
   - levelNumber: 4
     audioEntries:
     - name: Spawn
@@ -537,7 +537,7 @@ MonoBehaviour:
     - name: Story
       clip: {fileID: 0}
     - name: SFX
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 1ab88c0ba3d2c7f45813296170156e01, type: 3}
     - name: Win
       clip: {fileID: 0}
   - levelNumber: 8
@@ -561,13 +561,13 @@ MonoBehaviour:
     - name: Story
       clip: {fileID: 0}
     - name: SFX
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: b0dffe1ef5fc63649adae346b52839a4, type: 3}
   - levelNumber: 11
     audioEntries:
     - name: Provoke
       clip: {fileID: 0}
     - name: Flatline
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 13313568a6355ba438e88bb2e4359b2b, type: 3}
   fadeDuration: 1
 --- !u!4 &511581054
 Transform:
