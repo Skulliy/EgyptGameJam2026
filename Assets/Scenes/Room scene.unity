@@ -233,33 +233,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1952477637169431045}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &534095853 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -3386553121241536846, guid: ebab0ebb2cae58f449902b9f813d1422,
-    type: 3}
-  m_PrefabInstance: {fileID: 2036875043}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &534095857
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534095853}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.009553566, y: 0.01, z: 0.010000002}
-  m_Center: {x: -0.00001941435, y: 0, z: 9.3132246e-10}
 --- !u!1 &550288068
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,7 +244,7 @@ GameObject:
   - component: {fileID: 550288069}
   - component: {fileID: 550288070}
   m_Layer: 0
-  m_Name: Object picker
+  m_Name: Object Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,7 +262,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 718162998}
   m_Father: {fileID: 1055352572}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &550288070
@@ -311,6 +285,30 @@ MonoBehaviour:
   OnObjectEnter:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 718162999}
+        m_TargetAssemblyTypeName: ObjectSelectionTrigger, Assembly-CSharp
+        m_MethodName: StartListening
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 782770658}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: PickableObjectIsInRange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1055352577}
         m_TargetAssemblyTypeName: Interactable, Assembly-CSharp
         m_MethodName: EnableTooltip
@@ -326,6 +324,30 @@ MonoBehaviour:
   OnObjectExit:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 718162999}
+        m_TargetAssemblyTypeName: ObjectSelectionTrigger, Assembly-CSharp
+        m_MethodName: StopListening
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 782770658}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: PickableObjectIsNotInRange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1055352577}
         m_TargetAssemblyTypeName: Interactable, Assembly-CSharp
         m_MethodName: DisableTooltip
@@ -615,6 +637,55 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.01, y: 0.01, z: 0.009999999}
   m_Center: {x: 0, y: 0, z: -4.656613e-10}
+--- !u!1 &718162997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 718162998}
+  - component: {fileID: 718162999}
+  m_Layer: 0
+  m_Name: Object selector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &718162998
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718162997}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 550288069}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &718162999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718162997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c70972e5248376947981911798872b4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionKey: 101
+  OnObjectSelected:
+    m_PersistentCalls:
+      m_Calls: []
+  currentTarget: {fileID: 0}
 --- !u!1 &782770653
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,6 +698,7 @@ GameObject:
   - component: {fileID: 782770656}
   - component: {fileID: 782770655}
   - component: {fileID: 782770654}
+  - component: {fileID: 782770658}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -718,6 +790,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &782770658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782770653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58561e10e8ace564faf17d6055f506b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionText: {fileID: 1651623733}
+  crosshairImage: {fileID: 1278275189}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  interactColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &865541706
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,7 +1662,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35.5
+  m_fontSize: 37.55
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1845,6 +1933,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.010000022, y: 0.0852028, z: 0.2382873}
   m_Center: {x: 0.00000002863818, y: 0, z: 0.000000011204977}
+--- !u!1 &1839039630 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6588137646990983289, guid: ebab0ebb2cae58f449902b9f813d1422,
+    type: 3}
+  m_PrefabInstance: {fileID: 2036875043}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1839039634
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839039630}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.041999996, y: 0.045956686, z: 0.044750445}
+  m_Center: {x: 0.015999999, y: 0.014677321, z: -0.01737519}
 --- !u!1 &1939484503
 GameObject:
   m_ObjectHideFlags: 0
@@ -2024,10 +2139,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1746759042}
-    - targetCorrespondingSourceObject: {fileID: -3386553121241536846, guid: ebab0ebb2cae58f449902b9f813d1422,
+    - targetCorrespondingSourceObject: {fileID: -6588137646990983289, guid: ebab0ebb2cae58f449902b9f813d1422,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 534095857}
+      addedObject: {fileID: 1839039634}
     - targetCorrespondingSourceObject: {fileID: -7074681897062545621, guid: ebab0ebb2cae58f449902b9f813d1422,
         type: 3}
       insertIndex: -1
