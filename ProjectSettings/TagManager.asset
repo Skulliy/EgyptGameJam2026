@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Tooltip
+  - Position
+  - Story
+  - DoorFirstLevel
+  - BedFirstLevel
+  - HallwayDoor
   layers:
   - Default
   - TransparentFX

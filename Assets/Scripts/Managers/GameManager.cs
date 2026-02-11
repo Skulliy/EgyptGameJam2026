@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 	// This variable will hold your player reference
 	public GameObject currentPlayerReference;
 
-    private Vector3 roomEntryPosition;
+    [SerializeField] private Vector3 roomEntryPosition;
 
 	private int numberOfLosses = 0;
 
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     private AudioSource audioSource;
 
-    private int currentLevel = 1;
+    private int currentLevel;
 
     [SerializeField] List<LevelData> levelSounds;
 
@@ -48,12 +48,16 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
+        //for debugging
+        currentLevel = SceneManager.GetActiveScene().buildIndex;
 
         audioSource = GetComponent<AudioSource>();
 
 		roomEntryPosition = GameObject.FindGameObjectWithTag("Position").transform.position;
-		 fadeCanvasGroup = GameObject.Find("CanvasFadeGroup").GetComponent<CanvasGroup>();
-		 StartCoroutine(FadeOut());
+
+		fadeCanvasGroup = GameObject.Find("CanvasFadeGroup").GetComponent<CanvasGroup>();
+
+		StartCoroutine(FadeOut());
 
 		AudioPlay(levelSounds[0].audioEntries[0].clip);
 
@@ -111,11 +115,12 @@ public class GameManager : MonoBehaviour
     {
         if (puzzleSolvedCorrectly)
         {
+            fadeCanvasGroup.alpha = 1;
             if (currentLevel == 3 || currentLevel == 5)
             {
-                AudioPlay(GetSoundFromList(currentLevel, "SFX"));
-                StartCoroutine(DelayedAudioPlay(3, GetSoundFromList(currentLevel, "Win")));
-                StartCoroutine(LoadNextScene(6));
+                AudioPlay(GetSoundFromList(currentLevel, "Win"));
+                StartCoroutine(DelayedAudioPlay(3, GetSoundFromList(currentLevel, "SFX")));
+                StartCoroutine(LoadNextScene(7));
             }
             else if (currentLevel == 7)
             {
@@ -143,7 +148,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            LossTrigger();
+            Restart();
+            //LossTrigger();
             fadeCanvasGroup.alpha = 1;
         }
 
@@ -167,14 +173,18 @@ public class GameManager : MonoBehaviour
     private void DoorAudioFirstLevel()
     {
         AudioPlay(GetSoundFromList(currentLevel, "Door"));
+
+        EndOfLevelCheck();
     }
 
     private void BedAudioFirstLevel()
     {
         AudioPlay(GetSoundFromList(currentLevel, "Bed"));
+
+        EndOfLevelCheck();
     }
 
-    public void RoomEntry()
+    private void RoomEntry()
     {
         StartCoroutine(FadeOut());
         currentPlayerReference.transform.position = roomEntryPosition;
@@ -271,8 +281,12 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	public void ItemSelected(AudioClip voiceLine, PickableObject obj)
 	{
-	    //play audio
-
+        //play audio
+        if (obj.gameObject.CompareTag("HallwayDoor"))
+        {
+            RoomEntry();
+            return;
+        }
 		// 2. Mark that an item was picked
 		itemWasPicked = true;
         TurnOffItimSelection();
@@ -298,6 +312,13 @@ public class GameManager : MonoBehaviour
 		{
 			puzzleSolvedCorrectly = true;
 			Debug.Log("Puzzle Solved! Correct item selected.");
+
+            if (obj.gameObject.CompareTag("Story"))
+                StoryAudio();
+            else if (obj.gameObject.CompareTag("DoorFirstLevel"))
+                DoorAudioFirstLevel();
+            else if(obj.gameObject.CompareTag("BedFirstLevel"))
+                BedAudioFirstLevel();
 		}
 		else
 		{
