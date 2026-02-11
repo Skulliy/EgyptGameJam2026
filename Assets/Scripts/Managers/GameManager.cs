@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
 	// This variable will hold your player reference
 	public GameObject currentPlayerReference;
 
+    private Vector3 roomEntryPosition;
 
 	private int numberOfLosses = 0;
 
@@ -35,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Fade Settings")]
     private CanvasGroup fadeCanvasGroup;
-    public float fadeDuration = 2.0f; // Control the time here
+    public float fadeDuration = 3.0f; // Control the time here
 
     void Awake()
     {
@@ -46,8 +48,11 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
+
         audioSource = GetComponent<AudioSource>();
-        fadeCanvasGroup = GameObject.Find("CanvasFadeGroup").GetComponent<CanvasGroup>();
+
+        roomEntryPosition = GameObject.FindGameObjectWithTag("Position").transform.position;
+        
         StartCoroutine(FadeOut());
 
         AudioPlay(levelSounds[0].audioEntries[0].clip);
@@ -167,6 +172,15 @@ public class GameManager : MonoBehaviour
     private void BedAudioFirstLevel()
     {
         AudioPlay(GetSoundFromList(currentLevel, "Bed"));
+    }
+
+    public void RoomEntry()
+    {
+        StartCoroutine(FadeOut());
+        currentPlayerReference.transform.position = roomEntryPosition;
+
+        //Call this function when you interact with the door in the corridor
+        //feel free to add any functionality you want to this code
     }
 
     private void AudioPlay(AudioClip sound)
@@ -324,7 +338,9 @@ public class GameManager : MonoBehaviour
 			currentPlayerReference = null;
 			
 		}
-	}
+
+        fadeCanvasGroup = GameObject.Find("CanvasFadeGroup").GetComponent<CanvasGroup>();
+    }
 
 }
 #endregion
