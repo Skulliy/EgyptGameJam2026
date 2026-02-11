@@ -187,8 +187,10 @@ public class GameManager : MonoBehaviour
     private void RoomEntry()
     {
         StartCoroutine(FadeOut());
+        currentPlayerReference.GetComponent<CharacterController>().enabled = false;
         currentPlayerReference.transform.position = roomEntryPosition;
-		AudioPlay(GetSoundFromList(currentLevel, "Room"));
+        currentPlayerReference.GetComponent<CharacterController>().enabled = true;
+        AudioPlay(GetSoundFromList(currentLevel, "Room"));
 
 		//Call this function when you interact with the door in the corridor
 		//feel free to add any functionality you want to this code
