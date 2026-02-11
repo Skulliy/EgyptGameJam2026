@@ -9,17 +9,19 @@ public class GameManager : MonoBehaviour
 	// The "Singleton" Instance - this allows other scripts to say "GameManager.Instance"
 	public static GameManager Instance { get; private set; }
 
-	[Header("Audio Settings")]
+	/*[Header("Audio Settings")]
 	[Tooltip("Drag the Audio Source that will play the voice lines here.")]
-	public AudioSource voiceLineSource;
+	public AudioSource voiceLineSource;*/
 
 	[Header("Game State (Read Only)")]
 	public bool itemWasPicked = false;
 	public bool puzzleSolvedCorrectly = false;
 
-	
+	// This variable will hold your player reference
+	public GameObject currentPlayerReference;
 
-    private int numberOfLosses = 0;
+
+	private int numberOfLosses = 0;
 
     private int currentLevelLossTimes = 0;
 
@@ -245,20 +247,35 @@ public class GameManager : MonoBehaviour
         return null; // Return null if either the level or sound name is missing
     }
 
+
+
+
+
 	/// <summary>
 	/// Called by ItemObjectActionOfGameMyRoom when an item is interacted with.
 	/// </summary>
 	public void ItemSelected(AudioClip voiceLine, PickableObject obj)
 	{
-		// 1. Play the voice line (if one was provided)
-		if (voiceLine != null && voiceLineSource != null)
-		{
-			voiceLineSource.Stop(); // Stop any previous line so they don't overlap
-			voiceLineSource.PlayOneShot(voiceLine);
-		}
+	    //play audio
 
 		// 2. Mark that an item was picked
 		itemWasPicked = true;
+        TurnOffItimSelection();
+
+		void TurnOffItimSelection()
+        {
+			ObjectSelector objSelect = currentPlayerReference.GetComponentInChildren<ObjectSelector>();
+			if (objSelect != null)
+			{
+				objSelect.currentSelectionMode = ObjectSelector.SelectionMode.InteractableObjectsOnly;
+
+			}
+			else
+			{
+				Debug.LogError("ObjectSelector component not found on player.");
+			}
+		}
+		
 
 		// 3. Check if the puzzle is solved based on the object type
 		// We assume 'SpecialObject' is the correct solution
@@ -272,10 +289,45 @@ public class GameManager : MonoBehaviour
 			puzzleSolvedCorrectly = false;
 			Debug.Log("Wrong item selected.");
 		}
+
+	}
+
+    //this region is for getting a refrence to the player
+	#region 
+
+
+	private void OnEnable()
+	{
+		// Tell Unity to run our function whenever a scene loads
+		SceneManager.sceneLoaded += FindPlayerInScene;
+	}
+
+	private void OnDisable()
+	{
+		// Clean up the link when the object is destroyed
+		SceneManager.sceneLoaded -= FindPlayerInScene;
+	}
+
+	// This method runs every time a new scene is loaded
+	private void FindPlayerInScene(Scene scene, LoadSceneMode mode)
+	{
+		// Attempt to find the object with the "Player" tag
+		GameObject player = GameObject.FindWithTag("Player");
+
+		if (player != null)
+		{
+			currentPlayerReference = player;
+			
+		}
+		else
+		{
+			currentPlayerReference = null;
+			
+		}
 	}
 
 }
-
+#endregion
 
 [System.Serializable]
 public class SoundEntry

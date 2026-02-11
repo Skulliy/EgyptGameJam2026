@@ -147,4 +147,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81002216fd9da2a48829faad32fdf978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  voicelineToPlayOnPickUp: {fileID: 0}
+  percentage: 0.1

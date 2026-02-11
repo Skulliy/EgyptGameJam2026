@@ -29,7 +29,7 @@ public class ObjectSelectionTrigger : MonoBehaviour
 				OnObjectSelected.Invoke(currentTarget);
 				currentTarget.OnPickedUp.Invoke();
 
-				currentTarget.GetComponent<Renderer>().material.color = Color.green;
+				//currentTarget.GetComponent<Renderer>().material.color = Color.green;
 			}
 		}
 	}
