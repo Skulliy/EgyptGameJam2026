@@ -51,11 +51,11 @@ public class GameManager : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
 
-        roomEntryPosition = GameObject.FindGameObjectWithTag("Position").transform.position;
-        
-        StartCoroutine(FadeOut());
+		roomEntryPosition = GameObject.FindGameObjectWithTag("Position").transform.position;
+		 fadeCanvasGroup = GameObject.Find("CanvasFadeGroup").GetComponent<CanvasGroup>();
+		 StartCoroutine(FadeOut());
 
-        AudioPlay(levelSounds[0].audioEntries[0].clip);
+		AudioPlay(levelSounds[0].audioEntries[0].clip);
 
         // If not, set the instance to this and make it persistent
         Instance = this;
@@ -178,10 +178,11 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(FadeOut());
         currentPlayerReference.transform.position = roomEntryPosition;
+		AudioPlay(GetSoundFromList(currentLevel, "Room"));
 
-        //Call this function when you interact with the door in the corridor
-        //feel free to add any functionality you want to this code
-    }
+		//Call this function when you interact with the door in the corridor
+		//feel free to add any functionality you want to this code
+	}
 
     private void AudioPlay(AudioClip sound)
     {
@@ -281,7 +282,7 @@ public class GameManager : MonoBehaviour
 			ObjectSelector objSelect = currentPlayerReference.GetComponentInChildren<ObjectSelector>();
 			if (objSelect != null)
 			{
-				objSelect.currentSelectionMode = ObjectSelector.SelectionMode.InteractableObjectsOnly;
+				objSelect.currentSelectionMode = ObjectSelector.SelectionMode.DoorOnly;
 
 			}
 			else

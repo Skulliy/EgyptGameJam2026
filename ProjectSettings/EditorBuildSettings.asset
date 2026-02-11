@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 1 Hallway.unity
     guid: c5ba215a906f0d24196b409162882074
+  - enabled: 1
+    path: Assets/Scenes/Room scene.unity
+    guid: 34666db6859954143927b740bee04c38
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects: {}

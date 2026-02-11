@@ -8,7 +8,7 @@ public class ObjectSelector : MonoBehaviour
 		LookingForNormal,
 		LookingForSpecial,
 		LookingForBoth,
-		InteractableObjectsOnly // New state added here
+		DoorOnly // New state added here
 	}
 
 	[Header("Raycast Settings")]
@@ -65,15 +65,26 @@ public class ObjectSelector : MonoBehaviour
 	bool IsTypeMatch(PickableObject obj)
 	{
 		// 1. If it's an Interactable Object, it ALWAYS matches (unless it's null)
-		if (obj.objectType == ObjectType.InteractableObject)
-			return true;
+		/*if (obj.objectType == ObjectType.InteractableObject)
+			return true;*/
 
 		// 2. If we are ONLY looking for interactables, and we got here, it's NOT one.
-		if (currentSelectionMode == SelectionMode.InteractableObjectsOnly)
+		if (currentSelectionMode == SelectionMode.DoorOnly)
+		{
+			if (obj.objectType == ObjectType.Door)
+			{
+				return true;
+			}
 			return false;
+		}
+		if (obj.objectType == ObjectType.Door)
+		{
+			return false;
+		}
 
-		// 3. Standard filtering for everything else
-		if (currentSelectionMode == SelectionMode.LookingForBoth) return true;
+
+			// 3. Standard filtering for everything else
+			if (currentSelectionMode == SelectionMode.LookingForBoth) return true;
 
 		if (currentSelectionMode == SelectionMode.LookingForNormal &&
 			obj.objectType == ObjectType.NormalObject) return true;

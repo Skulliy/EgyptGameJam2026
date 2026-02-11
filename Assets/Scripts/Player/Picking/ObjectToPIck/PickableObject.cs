@@ -5,7 +5,7 @@ public enum ObjectType
 {
 	NormalObject,
 	SpecialObject,
-	InteractableObject // New state added here
+	Door // New state added here
 }
 
 public class PickableObject : MonoBehaviour
