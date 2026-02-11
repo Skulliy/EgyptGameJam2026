@@ -474,94 +474,94 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba02aaa23ebc84c4dbddc45e9e915350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzlesolved: 0
+  voiceLineSource: {fileID: 0}
+  itemWasPicked: 0
+  puzzleSolvedCorrectly: 0
   levelSounds:
   - levelNumber: 1
     audioEntries:
     - name: Spawn
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 21189d55576475140b845657d7b7747b, type: 3}
     - name: Room
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 0f68e48e32ae3ce4ca8334b505c5a180, type: 3}
     - name: Bed
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 7d7c1665f6e616e4697b9a3297678f5d, type: 3}
     - name: Door
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: fdbc4841c9f6e9c4989b4565cc933bf3, type: 3}
   - levelNumber: 2
     audioEntries:
     - name: Spawn
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: c4a8ba972beba094480ccb3e26c7a83f, type: 3}
     - name: Hint
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 05e73a2612757404aa519af9acdbe8f4, type: 3}
     - name: Win
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 0e154a67b7800a341bb44f32f7f8bb51, type: 3}
     - name: Respawn
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 1e6e6c806f293594b9ba6e8dc702b27f, type: 3}
   - levelNumber: 3
     audioEntries:
     - name: Spawn
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 1aa409da1166f6d43b01fc7bbea21d0e, type: 3}
     - name: Win
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 1b5367ff020d9fd478dea2e8ec2ef305, type: 3}
     - name: Story
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 1bd1eb1f0dbacc14b8c014dffde7d242, type: 3}
     - name: SFX
       clip: {fileID: 8300000, guid: 1cd033fd405f9ef40809ebebd7196764, type: 3}
   - levelNumber: 4
     audioEntries:
     - name: Spawn
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: c1b9ebc631c127746bbf597e0112670b, type: 3}
     - name: Respawn
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 1e6e6c806f293594b9ba6e8dc702b27f, type: 3}
   - levelNumber: 5
     audioEntries:
     - name: Spawn
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: ec8818f50a3183a43859e72ccfba93d6, type: 3}
     - name: Story
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 88698c1e79781db44a22a677ada10f8b, type: 3}
     - name: Win
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 80ed080e590aa6f4e87c7ff96d4d6c96, type: 3}
     - name: SFX
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 13313568a6355ba438e88bb2e4359b2b, type: 3}
   - levelNumber: 6
     audioEntries:
     - name: Spawn
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 09047d1c6b84f1447ab6cdfc80807a85, type: 3}
     - name: HInt
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 5801396528735594c823d73ce783bf3d, type: 3}
     - name: SFX
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: e6eb12bf9b782b2488c873072eacbae5, type: 3}
   - levelNumber: 7
     audioEntries:
     - name: Spawn
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 013856871d002994e9fd9df9b4dac9b1, type: 3}
     - name: Story
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 4069cc8b8ba1fe24db8e4afb755ddc12, type: 3}
     - name: SFX
       clip: {fileID: 8300000, guid: 1ab88c0ba3d2c7f45813296170156e01, type: 3}
     - name: Win
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 47793214a0d6c504c9363bf1c8a0a9f0, type: 3}
   - levelNumber: 8
     audioEntries:
     - name: Spawn
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 5af2199ee62c52a46be5e9fc97332713, type: 3}
     - name: Respawn
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: 1e6e6c806f293594b9ba6e8dc702b27f, type: 3}
     - name: Win
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: b161830ba614a2047a7f8afcca8ded20, type: 3}
   - levelNumber: 9
     audioEntries:
     - name: Spawn
-      clip: {fileID: 0}
-    - name: Win
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: aca213934b8cf5b4f888fe445d723313, type: 3}
     - name: SFX
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: fdf50f2f255a8fd4b95f8dcdfe3a9dd0, type: 3}
   - levelNumber: 10
     audioEntries:
     - name: Story
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: cda774f609f425340b9279eb1982d86d, type: 3}
     - name: SFX
-      clip: {fileID: 8300000, guid: b0dffe1ef5fc63649adae346b52839a4, type: 3}
+      clip: {fileID: 8300000, guid: a754e40cb4fc98d4b8c641cda6f9004e, type: 3}
   - levelNumber: 11
     audioEntries:
     - name: Provoke

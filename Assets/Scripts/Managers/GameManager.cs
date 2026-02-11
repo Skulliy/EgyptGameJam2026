@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         
         StartCoroutine(FadeOut());
         
-        if(currentLevel == 2 && currentLevelLossTimes < 1)
+        if(currentLevel == 2 && currentLevelLossTimes == 1)
         {
             AudioPlay(GetSoundFromList(currentLevel, "Hint"));
         }
@@ -74,6 +74,10 @@ public class GameManager : MonoBehaviour
         else if (currentLevel == 6)
         {
             AudioPlay(GetSoundFromList(currentLevel, "Hint"));
+        }
+        else
+        {
+            AudioPlay(GetSoundFromList(currentLevel, "Respawn"));
         }
     }
 
@@ -100,12 +104,35 @@ public class GameManager : MonoBehaviour
     {
         if (puzzleSolvedCorrectly)
         {
-            if (currentLevel == 3 || currentLevel == 5 || currentLevel == 7 || currentLevel == 10)
+            if (currentLevel == 3 || currentLevel == 5)
+            {
                 AudioPlay(GetSoundFromList(currentLevel, "SFX"));
-            else if(currentLevel != 4)
+                StartCoroutine(DelayedAudioPlay(3, GetSoundFromList(currentLevel, "Win")));
+                StartCoroutine(LoadNextScene(6));
+            }
+            else if (currentLevel == 7)
+            {
                 AudioPlay(GetSoundFromList(currentLevel, "Win"));
+                StartCoroutine(LoadNextScene(12));
 
-            StartCoroutine(LoadNextScene(2));
+            }else if (currentLevel == 9)
+            {
+                AudioPlay(GetSoundFromList(currentLevel, "SFX"));
+                StartCoroutine(LoadNextScene(3));
+            }
+            else if (currentLevel == 10)
+            {
+                AudioPlay(GetSoundFromList(currentLevel, "SFX"));
+                StartCoroutine(LoadNextScene(2));
+            }
+            else if (currentLevel != 4 && currentLevel > 1)
+            {
+                AudioPlay(GetSoundFromList(currentLevel, "Win"));
+                StartCoroutine(LoadNextScene(2));
+            }else if(currentLevel == 4)
+            {
+                StartCoroutine(LoadNextScene(0));
+            }
         }
         else
         {
@@ -125,9 +152,19 @@ public class GameManager : MonoBehaviour
             AudioPlay(GetSoundFromList(11,"Flatline"));
     }
 
-    public void StoryAudio(int levelnumber)
+    private void StoryAudio()
     {
-        AudioPlay(GetSoundFromList(levelnumber,"Story"));
+        AudioPlay(GetSoundFromList(currentLevel,"Story"));
+    }
+
+    private void DoorAudioFirstLevel()
+    {
+        AudioPlay(GetSoundFromList(currentLevel, "Door"));
+    }
+
+    private void BedAudioFirstLevel()
+    {
+        AudioPlay(GetSoundFromList(currentLevel, "Bed"));
     }
 
     private void AudioPlay(AudioClip sound)
@@ -145,14 +182,23 @@ public class GameManager : MonoBehaviour
         // Optional: Check if the next scene index is valid (prevents error if at the last scene)
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
-            SceneManager.LoadScene(nextSceneIndex);
-
             currentLevel++;
+            SceneManager.LoadScene(nextSceneIndex);
 
             fadeCanvasGroup = GameObject.Find("FadeImage").GetComponent<CanvasGroup>();
             StartCoroutine(FadeOut());
 
-            AudioPlay(GetSoundFromList(currentLevel, "Spawn"));
+            audioSource.Stop();
+
+            if (currentLevel <= 10) {
+                AudioPlay(GetSoundFromList(currentLevel, "Spawn"));
+            }
+
+            if (currentLevel == 6) {
+
+                DelayedAudioPlay(15, GetSoundFromList(currentLevel,"Hint"));
+                StartCoroutine(UnlockDoorOnLevel6(6));
+            }
         }
         else
         {
@@ -160,6 +206,19 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(0);
         }
     }
+
+    IEnumerator DelayedAudioPlay(int delay, AudioClip audio)
+    {
+        yield return new WaitForSeconds(delay);
+        AudioPlay(audio);
+    }
+
+    IEnumerator UnlockDoorOnLevel6(int delay)
+    {
+        yield return new WaitForSeconds(delay);
+        itemWasPicked = true;
+    }
+
     private AudioClip GetSoundFromList(int targetLevel, string targetName)
     {
         // 1. Find the LevelData object that matches your level number
