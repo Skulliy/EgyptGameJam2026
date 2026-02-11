@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6344848267805646274}
   - component: {fileID: 4912689971568197197}
   - component: {fileID: 1559130631473023671}
+  - component: {fileID: 1558369511261756431}
   m_Layer: 0
   m_Name: Pickable object
   m_TagString: Untagged
@@ -119,5 +120,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectType: 0
-  interactable: 0
-  tooltipText: Press E
+  OnPickedUp:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1558369511261756431}
+        m_TargetAssemblyTypeName: ItemObjectActionOfGameMyRoom, Assembly-CSharp
+        m_MethodName: ActionOnInteraction
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1558369511261756431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7915085651071028610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81002216fd9da2a48829faad32fdf978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voicelineToPlayOnPickUp: {fileID: 0}

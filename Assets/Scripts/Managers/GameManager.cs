@@ -6,7 +6,18 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public bool puzzlesolved = false;
+	// The "Singleton" Instance - this allows other scripts to say "GameManager.Instance"
+	public static GameManager Instance { get; private set; }
+
+	[Header("Audio Settings")]
+	[Tooltip("Drag the Audio Source that will play the voice lines here.")]
+	public AudioSource voiceLineSource;
+
+	[Header("Game State (Read Only)")]
+	public bool itemWasPicked = false;
+	public bool puzzleSolvedCorrectly = false;
+
+	
 
     private int numberOfLosses = 0;
 
@@ -18,8 +29,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] List<LevelData> levelSounds;
 
-    // Static instance of GameManager which allows it to be accessed by any other script.
-    public static GameManager Instance { get; private set; }
+
 
     [Header("Fade Settings")]
     private CanvasGroup fadeCanvasGroup;
@@ -88,7 +98,7 @@ public class GameManager : MonoBehaviour
 
     public void EndOfLevelCheck()
     {
-        if (puzzlesolved)
+        if (puzzleSolvedCorrectly)
         {
             if (currentLevel == 3 || currentLevel == 5 || currentLevel == 7 || currentLevel == 10)
                 AudioPlay(GetSoundFromList(currentLevel, "SFX"));
@@ -175,7 +185,38 @@ public class GameManager : MonoBehaviour
         }
         return null; // Return null if either the level or sound name is missing
     }
+
+	/// <summary>
+	/// Called by ItemObjectActionOfGameMyRoom when an item is interacted with.
+	/// </summary>
+	public void ItemSelected(AudioClip voiceLine, PickableObject obj)
+	{
+		// 1. Play the voice line (if one was provided)
+		if (voiceLine != null && voiceLineSource != null)
+		{
+			voiceLineSource.Stop(); // Stop any previous line so they don't overlap
+			voiceLineSource.PlayOneShot(voiceLine);
+		}
+
+		// 2. Mark that an item was picked
+		itemWasPicked = true;
+
+		// 3. Check if the puzzle is solved based on the object type
+		// We assume 'SpecialObject' is the correct solution
+		if (obj.objectType == ObjectType.SpecialObject)
+		{
+			puzzleSolvedCorrectly = true;
+			Debug.Log("Puzzle Solved! Correct item selected.");
+		}
+		else
+		{
+			puzzleSolvedCorrectly = false;
+			Debug.Log("Wrong item selected.");
+		}
+	}
+
 }
+
 
 [System.Serializable]
 public class SoundEntry

@@ -27,6 +27,8 @@ public class ObjectSelectionTrigger : MonoBehaviour
 				// Fire the event!
 				// This broadcasts the specific object we just clicked on.
 				OnObjectSelected.Invoke(currentTarget);
+				currentTarget.OnPickedUp.Invoke();
+
 				currentTarget.GetComponent<Renderer>().material.color = Color.green;
 			}
 		}

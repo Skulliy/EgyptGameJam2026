@@ -37,13 +37,14 @@ public class FootstepController : MonoBehaviour
 
 	void CheckMovement()
 	{
+		
 		// 1. Calculate horizontal distance only (ignore Y)
 		Vector3 currentPos = transform.position;
 		Vector3 lastPosHorizontal = new Vector3(lastPosition.x, 0, lastPosition.z);
 		Vector3 currentPosHorizontal = new Vector3(currentPos.x, 0, currentPos.z);
 
 		float distanceMoved = Vector3.Distance(lastPosHorizontal, currentPosHorizontal);
-		Debug.Log(" distanceMoved is " + distanceMoved);
+
 		// 2. Check if moved enough AND is grounded
 		// We use a threshold because floating point math is never exactly zero
 		if (distanceMoved > movementThreshold && controller.isGrounded)
