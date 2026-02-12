@@ -36,8 +36,7 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Fade Settings")]
-    private CanvasGroup fadeCanvasGroup;
-    public float fadeDuration = 3.0f; // Control the time here
+    private CanvasGroup fadeCanvasGroup; 
 
     void Awake()
     {
@@ -48,6 +47,7 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
+        PlayerRefrenceGrabber();
         //for debugging
         currentLevel = SceneManager.GetActiveScene().buildIndex;
 
@@ -57,9 +57,7 @@ public class GameManager : MonoBehaviour
 
 		fadeCanvasGroup = GameObject.Find("CanvasFadeGroup").GetComponent<CanvasGroup>();
 
-		StartCoroutine(FadeOut());
-
-		AudioPlay(levelSounds[0].audioEntries[0].clip);
+		StartCoroutine(DelayedAudioPlay(1,levelSounds[0].audioEntries[0].clip));
 
         // If not, set the instance to this and make it persistent
         Instance = this;
@@ -70,9 +68,15 @@ public class GameManager : MonoBehaviour
     {
         numberOfLosses++;
         currentLevelLossTimes++;
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         
-        StartCoroutine(FadeOut());
+        fadeCanvasGroup = GameObject.Find("CanvasFadeGroup").GetComponent<CanvasGroup>();
+
+        itemWasPicked = false;
+        PlayerRefrenceGrabber();
+
+        FadeOut();
         
         if(currentLevel == 2 && currentLevelLossTimes == 1)
         {
@@ -92,29 +96,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator FadeOut()
+    private void FadeOut()
     {
-        float timer = 0;
-
-        // Ensure the alpha starts at 1 (fully black)
-        fadeCanvasGroup.alpha = 1;
-
-        while (timer < fadeDuration)
-        {
-            timer += Time.deltaTime;
-            // Linearly interpolate alpha from 1 to 0
-            fadeCanvasGroup.alpha = Mathf.Lerp(1, 0, timer / fadeDuration);
-            yield return null; // Wait for the next frame
-        }
-
-        fadeCanvasGroup.alpha = 0;
-        fadeCanvasGroup.blocksRaycasts = false; // Allows clicking "through" the faded screen
+        fadeCanvasGroup.gameObject.GetComponent<Animator>().enabled = true;
+        fadeCanvasGroup.gameObject.GetComponent<Animator>().SetTrigger("Fade");
     }
 
     public void EndOfLevelCheck()
     {
         if (puzzleSolvedCorrectly)
         {
+            fadeCanvasGroup.gameObject.GetComponent<Animator>().enabled = false;
             fadeCanvasGroup.alpha = 1;
             if (currentLevel == 3 || currentLevel == 5)
             {
@@ -127,7 +119,8 @@ public class GameManager : MonoBehaviour
                 AudioPlay(GetSoundFromList(currentLevel, "Win"));
                 StartCoroutine(LoadNextScene(12));
 
-            }else if (currentLevel == 9)
+            }
+            else if (currentLevel == 9)
             {
                 AudioPlay(GetSoundFromList(currentLevel, "SFX"));
                 StartCoroutine(LoadNextScene(3));
@@ -141,22 +134,23 @@ public class GameManager : MonoBehaviour
             {
                 AudioPlay(GetSoundFromList(currentLevel, "Win"));
                 StartCoroutine(LoadNextScene(2));
-            }else if(currentLevel == 4)
-            {
-                StartCoroutine(LoadNextScene(0));
             }
+            else if (currentLevel == 4)
+                StartCoroutine(LoadNextScene(0));
+            else if (currentLevel == 1)
+                StartCoroutine (LoadNextScene(2));
         }
         else
         {
-           // Restart();
             LossTrigger();
-            fadeCanvasGroup.alpha = 1;
         }
 
     }
 
     private void LossTrigger()
     {
+        fadeCanvasGroup.gameObject.GetComponent<Animator>().enabled = false;
+        fadeCanvasGroup.alpha = 1;
         //Trigger the Loss/Restart UI
         TriggerGameOverSequence();
 
@@ -202,11 +196,11 @@ public class GameManager : MonoBehaviour
 
     private void RoomEntry()
     {
-        StartCoroutine(FadeOut());
+        FadeOut();
         currentPlayerReference.GetComponent<CharacterController>().enabled = false;
         currentPlayerReference.transform.position = roomEntryPosition;
         currentPlayerReference.GetComponent<CharacterController>().enabled = true;
-        AudioPlay(GetSoundFromList(currentLevel, "Room"));
+        StartCoroutine(DelayedAudioPlay(2, GetSoundFromList(currentLevel, "Room")));
 
 		//Call this function when you interact with the door in the corridor
 		//feel free to add any functionality you want to this code
@@ -230,8 +224,13 @@ public class GameManager : MonoBehaviour
             currentLevel++;
             SceneManager.LoadScene(nextSceneIndex);
 
-            fadeCanvasGroup = GameObject.Find("FadeImage").GetComponent<CanvasGroup>();
-            StartCoroutine(FadeOut());
+            itemWasPicked = false;
+            puzzleSolvedCorrectly = false;
+
+            PlayerRefrenceGrabber();
+
+            fadeCanvasGroup = GameObject.Find("CanvasFadeGroup").GetComponent<CanvasGroup>();
+            FadeOut();
 
             audioSource.Stop();
 
@@ -290,7 +289,10 @@ public class GameManager : MonoBehaviour
         return null; // Return null if either the level or sound name is missing
     }
 
-
+    private void PlayerRefrenceGrabber()
+    {
+        currentPlayerReference = GameObject.FindGameObjectWithTag("Player");
+    }
 
 
 
@@ -314,7 +316,7 @@ public class GameManager : MonoBehaviour
 			ObjectSelector objSelect = currentPlayerReference.GetComponentInChildren<ObjectSelector>();
 			if (objSelect != null)
 			{
-				objSelect.currentSelectionMode = ObjectSelector.SelectionMode.DoorOnly;
+                objSelect.currentSelectionMode = ObjectSelector.SelectionMode.DoorOnly;
 
 			}
 			else
