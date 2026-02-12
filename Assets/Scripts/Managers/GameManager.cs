@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
         {
             AudioPlay(GetSoundFromList(currentLevel, "Hint"));
             StartCoroutine(UnlockDoorOnLevel6(1));
-            StartCoroutine(Level6Death(25));
+            level6Loss = StartCoroutine(Level6Death(25));
         }
         else
         {
