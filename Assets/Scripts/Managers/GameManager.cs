@@ -148,8 +148,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Restart();
-            //LossTrigger();
+           // Restart();
+            LossTrigger();
             fadeCanvasGroup.alpha = 1;
         }
 
@@ -158,14 +158,30 @@ public class GameManager : MonoBehaviour
     private void LossTrigger()
     {
         //Trigger the Loss/Restart UI
+        TriggerGameOverSequence();
 
-        if (currentLevelLossTimes > 2)
+		if (currentLevelLossTimes > 2)
             AudioPlay(GetSoundFromList(11,"Provoke"));
         else if (currentLevel > 3)
             AudioPlay(GetSoundFromList(11,"Flatline"));
     }
+	public void TriggerGameOverSequence()
+	{
+		// Search the scene for the script
+		GameOverPlayerActivator activator = FindObjectOfType<GameOverPlayerActivator>();
 
-    private void StoryAudio()
+		if (activator != null)
+		{
+			activator.TriggerGameOver();
+			Debug.Log("Game Over Sequence Started.");
+		}
+		else
+		{
+			Debug.LogError("Could not find a GameOverPlayerActivator in the scene!");
+		}
+	}
+
+	private void StoryAudio()
     {
         AudioPlay(GetSoundFromList(currentLevel,"Story"));
     }
