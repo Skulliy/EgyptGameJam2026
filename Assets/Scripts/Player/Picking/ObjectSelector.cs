@@ -3,14 +3,6 @@ using UnityEngine.Events;
 
 public class ObjectSelector : MonoBehaviour
 {
-	public enum SelectionMode
-	{
-		LookingForNormal,
-		LookingForSpecial,
-		LookingForBoth,
-		DoorOnly // New state added here
-	}
-
 	[Header("Raycast Settings")]
 	public Transform rayOrigin;
 	public float maxDistance = 3.0f;
@@ -94,4 +86,17 @@ public class ObjectSelector : MonoBehaviour
 
 		return false;
 	}
+
+	public void ToggleDoorOnly()
+	{
+		currentSelectionMode = SelectionMode.DoorOnly;
+	}
+
+    public enum SelectionMode
+    {
+        LookingForNormal,
+        LookingForSpecial,
+        LookingForBoth,
+        DoorOnly // New state added here
+    }
 }

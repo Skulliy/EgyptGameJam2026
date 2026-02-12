@@ -388,11 +388,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -660,7 +660,7 @@ MonoBehaviour:
   - levelNumber: 11
     audioEntries:
     - name: Provoke
-      clip: {fileID: 0}
+      clip: {fileID: 8300000, guid: a9cbea37ace062243852ce59c6720dd8, type: 3}
     - name: Flatline
       clip: {fileID: 8300000, guid: 13313568a6355ba438e88bb2e4359b2b, type: 3}
 --- !u!4 &511581054
@@ -1336,6 +1336,11 @@ PrefabInstance:
       propertyPath: currentSelectionMode
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8082061405254749239, guid: 00c8ff4987f828649a176ac5241d68fa,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1541,6 +1546,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RoomWithColiders Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971256034877372722, guid: 3f0ecced2774b4a4e95461abface5a39,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971256034877372722, guid: 3f0ecced2774b4a4e95461abface5a39,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.79077685
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971256034877372722, guid: 3f0ecced2774b4a4e95461abface5a39,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.9254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971256034877372722, guid: 3f0ecced2774b4a4e95461abface5a39,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 36.27
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

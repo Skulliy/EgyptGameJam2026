@@ -699,7 +699,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "\uFED3\uFBFD \uFEA3\uFE8E\uFE9F\uFE94 \uFEE3\uFEB6 \uFEBB\uFEA2 \uFE83\uFEE7\uFE8E
-    \uFEEB\uFE8E\uFEA3\uFE8E\uFEED\uFEDD \uFE97\uFE8E\uFEE7\uFBFD"
+    \uFEEB\uFEA3\uFE8E\uFEED\uFEDD \uFE97\uFE8E\uFEE7\uFBFD"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

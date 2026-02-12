@@ -17,4 +17,28 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 3 Story Rings.unity
     guid: 8c5955c99f5095c4780334c681cef287
+  - enabled: 1
+    path: Assets/Scenes/Level 4 First Anomaly.unity
+    guid: e1e8f977a532a734d9e712b3b7325122
+  - enabled: 1
+    path: Assets/Scenes/Level 5 Story Baby.unity
+    guid: fa4feb47e192f7a4987768a9c859f4b2
+  - enabled: 1
+    path: Assets/Scenes/Level 6 Special Anomaly.unity
+    guid: 2bcedaa667cc4b347911009db402468c
+  - enabled: 1
+    path: Assets/Scenes/Level 7 Story Certificate.unity
+    guid: 92df40e7a23938e4fa2a5108610576f2
+  - enabled: 1
+    path: Assets/Scenes/Level 8 Anomaly hard.unity
+    guid: 0ecc10f14e727d1498b4e89114e85316
+  - enabled: 1
+    path: Assets/Scenes/Level 9 Special Anomaly.unity
+    guid: faab49f6ff7031948acf9f41e71357f7
+  - enabled: 1
+    path: Assets/Scenes/Level 10 Bottle.unity
+    guid: fe0b3ba3b68abe64ca45d7e1e2bf1d3c
+  - enabled: 1
+    path: Assets/Scenes/Menu start and finish/Credits.unity
+    guid: 733ef425d7a59684bb9f07a720132d4f
   m_configObjects: {}

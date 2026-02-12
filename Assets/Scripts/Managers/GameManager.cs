@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -33,10 +34,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] List<LevelData> levelSounds;
 
-
-
     [Header("Fade Settings")]
-    private CanvasGroup fadeCanvasGroup; 
+    private CanvasGroup fadeCanvasGroup;
+
+    private Coroutine level6Loss;
 
     void Awake()
     {
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-        PlayerRefrenceGrabber();
+        currentPlayerReference = GameObject.FindGameObjectWithTag("Player");
         //for debugging
         currentLevel = SceneManager.GetActiveScene().buildIndex;
 
@@ -57,7 +58,7 @@ public class GameManager : MonoBehaviour
 
 		fadeCanvasGroup = GameObject.Find("CanvasFadeGroup").GetComponent<CanvasGroup>();
 
-		StartCoroutine(DelayedAudioPlay(1,levelSounds[0].audioEntries[0].clip));
+		StartCoroutine(DelayedAudioPlay(1, GetSoundFromList(currentLevel, "Spawn")));
 
         // If not, set the instance to this and make it persistent
         Instance = this;
@@ -70,11 +71,8 @@ public class GameManager : MonoBehaviour
         currentLevelLossTimes++;
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        
-        fadeCanvasGroup = GameObject.Find("CanvasFadeGroup").GetComponent<CanvasGroup>();
 
         itemWasPicked = false;
-        PlayerRefrenceGrabber();
 
         FadeOut();
         
@@ -89,6 +87,8 @@ public class GameManager : MonoBehaviour
         else if (currentLevel == 6)
         {
             AudioPlay(GetSoundFromList(currentLevel, "Hint"));
+            StartCoroutine(UnlockDoorOnLevel6(1));
+            StartCoroutine(Level6Death(25));
         }
         else
         {
@@ -106,6 +106,7 @@ public class GameManager : MonoBehaviour
     {
         if (puzzleSolvedCorrectly)
         {
+            
             fadeCanvasGroup.gameObject.GetComponent<Animator>().enabled = false;
             fadeCanvasGroup.alpha = 1;
             if (currentLevel == 3 || currentLevel == 5)
@@ -114,11 +115,16 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(DelayedAudioPlay(3, GetSoundFromList(currentLevel, "SFX")));
                 StartCoroutine(LoadNextScene(7));
             }
+            else if (currentLevel == 6)
+            {
+                AudioPlay(GetSoundFromList(currentLevel, "SFX"));
+                StopCoroutine(level6Loss);
+                StartCoroutine(LoadNextScene(4));
+            }
             else if (currentLevel == 7)
             {
                 AudioPlay(GetSoundFromList(currentLevel, "Win"));
                 StartCoroutine(LoadNextScene(12));
-
             }
             else if (currentLevel == 9)
             {
@@ -127,18 +133,17 @@ public class GameManager : MonoBehaviour
             }
             else if (currentLevel == 10)
             {
-                AudioPlay(GetSoundFromList(currentLevel, "SFX"));
-                StartCoroutine(LoadNextScene(2));
+                StartCoroutine(LoadNextScene(7));
             }
             else if (currentLevel != 4 && currentLevel > 1)
             {
                 AudioPlay(GetSoundFromList(currentLevel, "Win"));
-                StartCoroutine(LoadNextScene(2));
+                StartCoroutine(LoadNextScene(3));
             }
             else if (currentLevel == 4)
                 StartCoroutine(LoadNextScene(0));
             else if (currentLevel == 1)
-                StartCoroutine (LoadNextScene(2));
+                StartCoroutine(LoadNextScene(2));
         }
         else
         {
@@ -227,22 +232,27 @@ public class GameManager : MonoBehaviour
             itemWasPicked = false;
             puzzleSolvedCorrectly = false;
 
-            PlayerRefrenceGrabber();
-
-            fadeCanvasGroup = GameObject.Find("CanvasFadeGroup").GetComponent<CanvasGroup>();
             FadeOut();
 
             audioSource.Stop();
 
-            if (currentLevel <= 10) {
-                AudioPlay(GetSoundFromList(currentLevel, "Spawn"));
-            }
+            if (currentLevel == 6)
+            {
+                StartCoroutine(DelayedAudioPlay(4, GetSoundFromList(currentLevel, "Spawn")));
+                StartCoroutine(DelayedAudioPlay(12, GetSoundFromList(currentLevel, "Hint")));
+                StartCoroutine(UnlockDoorOnLevel6(11));
+                level6Loss = StartCoroutine(Level6Death(28));
 
-            if (currentLevel == 6) {
-
-                DelayedAudioPlay(15, GetSoundFromList(currentLevel,"Hint"));
-                StartCoroutine(UnlockDoorOnLevel6(6));
+            }else if(currentLevel == 9)
+            {
+                StartCoroutine(DelayedAudioPlay(1, GetSoundFromList(currentLevel, "Spawn")));
+                itemWasPicked = true;
+                puzzleSolvedCorrectly = true;
             }
+            else if (currentLevel < 10)
+                StartCoroutine(DelayedAudioPlay(1, GetSoundFromList(currentLevel, "Spawn")));
+            if (currentLevel == 11)
+                Destroy(gameObject);
         }
         else
         {
@@ -260,7 +270,16 @@ public class GameManager : MonoBehaviour
     IEnumerator UnlockDoorOnLevel6(int delay)
     {
         yield return new WaitForSeconds(delay);
+        currentPlayerReference.GetComponentInChildren<ObjectSelector>().ToggleDoorOnly();
         itemWasPicked = true;
+        puzzleSolvedCorrectly = true;
+    }
+
+    IEnumerator Level6Death(int timelimit)
+    {
+        yield return new WaitForSeconds(timelimit);
+        puzzleSolvedCorrectly = false;
+        EndOfLevelCheck();
     }
 
     private AudioClip GetSoundFromList(int targetLevel, string targetName)
@@ -289,13 +308,6 @@ public class GameManager : MonoBehaviour
         return null; // Return null if either the level or sound name is missing
     }
 
-    private void PlayerRefrenceGrabber()
-    {
-        currentPlayerReference = GameObject.FindGameObjectWithTag("Player");
-    }
-
-
-
 	/// <summary>
 	/// Called by ItemObjectActionOfGameMyRoom when an item is interacted with.
 	/// </summary>
@@ -317,7 +329,6 @@ public class GameManager : MonoBehaviour
 			if (objSelect != null)
 			{
                 objSelect.currentSelectionMode = ObjectSelector.SelectionMode.DoorOnly;
-
 			}
 			else
 			{
@@ -332,12 +343,17 @@ public class GameManager : MonoBehaviour
 		{
 			puzzleSolvedCorrectly = true;
 			Debug.Log("Puzzle Solved! Correct item selected.");
-
-            if (obj.gameObject.CompareTag("Story"))
+            if (obj.gameObject.CompareTag("Story") && currentLevel == 10)
+            {
+                StoryAudio();
+                StartCoroutine(DelayedAudioPlay(2, GetSoundFromList(currentLevel, "SFX")));
+                EndOfLevelCheck();
+            }
+            else if (obj.gameObject.CompareTag("Story"))
                 StoryAudio();
             else if (obj.gameObject.CompareTag("DoorFirstLevel"))
                 DoorAudioFirstLevel();
-            else if(obj.gameObject.CompareTag("BedFirstLevel"))
+            else if (obj.gameObject.CompareTag("BedFirstLevel"))
                 BedAudioFirstLevel();
 		}
 		else
