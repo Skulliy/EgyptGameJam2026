@@ -862,6 +862,7 @@ MonoBehaviour:
   itemWasPicked: 0
   puzzleSolvedCorrectly: 0
   currentPlayerReference: {fileID: 0}
+  roomEntryPosition: {x: 0, y: 0, z: 0}
   levelSounds:
   - levelNumber: 1
     audioEntries:
@@ -1546,7 +1547,7 @@ PrefabInstance:
     - target: {fileID: 6295968024096576701, guid: 00c8ff4987f828649a176ac5241d68fa,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.28
+      value: -6.39
       objectReference: {fileID: 0}
     - target: {fileID: 6295968024096576701, guid: 00c8ff4987f828649a176ac5241d68fa,
         type: 3}
