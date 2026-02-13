@@ -699,7 +699,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "\uFED3\uFBFD \uFEA3\uFE8E\uFE9F\uFE94 \uFEE3\uFEB6 \uFEBB\uFEA2 \uFE83\uFEE7\uFE8E
-    \uFEEB\uFEA3\uFE8E\uFEED\uFEDD \uFE97\uFE8E\uFEE7\uFBFD"
+    \uFEEB\uFEA4\uFE8E\uFEED\uFEDD \uFE97\uFE8E\uFEE7\uFBFD"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -726,7 +726,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 43.15
+  m_fontSize: 51
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -771,7 +771,7 @@ MonoBehaviour:
   preserveNumbers: 0
   farsi: 1
   originalText: "\u0641\u064A \u062D\u0627\u062C\u0629 \u0645\u0634 \u0635\u062D
-    \u0623\u0646\u0627 \u0647\u0627\u062D\u0627\u0648\u0644 \u062A\u0627\u0646\u064A"
+    \u0623\u0646\u0627 \u0647\u062D\u0627\u0648\u0644 \u062A\u0627\u0646\u064A"
   fixTags: 1
   forceFix: 0
 --- !u!1 &3470482433007062136
